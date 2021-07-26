@@ -5,28 +5,29 @@
 #include <string>
 // std::mt19937, std::uniform_int_distribution
 #include <random>
-// std::setprecision()
+// std::fixed, std::time()?, std::fixed()?
 #include <iomanip>
 
-
-
-int main()
-{
+/// @param count amount of values to generate
+/// @param maxDiceValue maximal value for dice's range
+void writeSample( const uint16_t count = 10, const uint16_t maxDiceValue = 20 ){
     // writes data into a file (creates it, if necessary)
     std::ofstream writer( "sample.txt" );
 
     // random number generator
     std::mt19937 generator;
     generator.seed( std::time( 0 ) );
-
+    
     // uniform limiting range of possible values
-    std::uniform_real_distribution< float > dice( 0, 20 );
+    std::uniform_real_distribution< float > dice( 0, maxDiceValue >  INT16_MAX ? INT16_MAX  : maxDiceValue );
 
     // buffer for storing loop output
     std::stringstream buffer;
-    
+
     // maximal index ( can be no bigger than 365 )
-    const uint16_t maxIndex = uint16_t( 10 % 366);
+    const uint16_t maxIndex =  count > 365 
+        ? 365 
+        : count;
 
     for (uint16_t i = 0; i < maxIndex; i++)
     {
@@ -38,4 +39,10 @@ int main()
     }
 
     writer << buffer.str();
+}
+
+
+int main()
+{
+    writeSample(100, INT16_MAX);
 }
