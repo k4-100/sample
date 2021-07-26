@@ -42,7 +42,21 @@ void writeSample( const uint16_t count = 10, const uint16_t maxDiceValue = 20 ){
 }
 
 
-int main()
-{
-    writeSample(100, INT16_MAX);
+int main( int argc, char* argv[] )
+{   
+
+    switch( argc ){
+        case 1:
+            writeSample();
+        break;
+        case 2:
+            writeSample( atoi( argv[1] ) );
+        break;
+        case 3:
+            writeSample( atoi( argv[1] ),  atoi( argv[2] ) );
+        break;
+        default: 
+            std::cout<< "wrong arguments\n";
+        break;
+    }
 }
